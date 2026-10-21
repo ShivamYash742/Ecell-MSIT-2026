@@ -5,7 +5,7 @@
  * - unmount(): Cleans up engine, removes all event listeners
  */
 
-import { OrbitalTraceEngine, TIMING_ORBITAL_TRACE } from './orbitalTraceEngine.js';
+import { OrbitalTraceEngine } from './orbitalTraceEngine.js';
 import './style.css';
 
 export class Animation4Module {
@@ -20,7 +20,7 @@ export class Animation4Module {
   mount(container) {
     this.container = container;
 
-    // Semantic HTML Layout
+    // Semantic HTML Layout - Clean, pure brand animation without controls or replay buttons
     container.innerHTML = `
       <div class="anim4-root">
         <!-- Canvas Layer (Deep gradient, ambient stardust, dual orbital comets) -->
@@ -36,19 +36,6 @@ export class Animation4Module {
           </h1>
           <p class="anim4-tagline">IDEATE. INSPIRE. INVEST.</p>
         </section>
-
-        <!-- Minimal Sleek Floating Replay Control -->
-        <nav class="anim4-controls-bar" aria-label="Animation Controls">
-          <button class="anim4-ctrl-btn primary btn-replay" title="Replay Animation (Press 'R' or Space)">
-            <svg class="anim4-ctrl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="1 4 1 10 7 10"></polyline>
-              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-            </svg>
-            <span>Replay</span>
-            <kbd class="anim4-kbd-hint">R</kbd>
-          </button>
-          <span class="anim4-timer-display" title="Animation playback time">0.0s / 4.5s</span>
-        </nav>
       </div>
     `;
 
@@ -57,8 +44,6 @@ export class Animation4Module {
     this.svgContainer = container.querySelector('.anim4-svg-container');
     this.wordmark = container.querySelector('.anim4-wordmark');
     this.tagline = container.querySelector('.anim4-tagline');
-    this.btnReplay = container.querySelector('.btn-replay');
-    this.timerDisplay = container.querySelector('.anim4-timer-display');
 
     this.initEngine();
     this.bindEvents();
@@ -66,14 +51,7 @@ export class Animation4Module {
 
   initEngine() {
     this.engine = new OrbitalTraceEngine(this.canvas, this.svgContainer, {
-      onPhaseChange: (phase, elapsed) => {
-        // Update live timer display
-        if (this.timerDisplay && typeof elapsed === 'number') {
-          const maxSec = (TIMING_ORBITAL_TRACE.totalDuration / 1000).toFixed(1);
-          const sec = Math.min(parseFloat(maxSec), elapsed / 1000).toFixed(1);
-          this.timerDisplay.textContent = `${sec}s / ${maxSec}s`;
-        }
-
+      onPhaseChange: (phase) => {
         // Trigger typography reveals sequentially
         if (phase === 'wordmark' || phase === 'tagline' || phase === 'hold') {
           this.wordmark?.classList.add('is-revealed');
@@ -103,28 +81,6 @@ export class Animation4Module {
       this.engine?.resize();
     };
     window.addEventListener('resize', this.boundHandlers.onResize);
-
-    // Replay
-    this.boundHandlers.onReplay = () => {
-      if (this.timerDisplay) {
-        const maxSec = (TIMING_ORBITAL_TRACE.totalDuration / 1000).toFixed(1);
-        this.timerDisplay.textContent = `0.0s / ${maxSec}s`;
-      }
-      this.wordmark?.classList.remove('is-revealed');
-      this.tagline?.classList.remove('is-revealed');
-      this.engine?.start();
-    };
-    this.btnReplay?.addEventListener('click', this.boundHandlers.onReplay);
-
-    // Keyboard Shortcuts (R = Replay, Space = Replay)
-    this.boundHandlers.onKeyDown = (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      if (e.code === 'KeyR' || e.code === 'Space') {
-        e.preventDefault();
-        this.boundHandlers.onReplay();
-      }
-    };
-    window.addEventListener('keydown', this.boundHandlers.onKeyDown);
   }
 
   unmount() {
@@ -135,9 +91,6 @@ export class Animation4Module {
 
     if (this.boundHandlers.onResize) {
       window.removeEventListener('resize', this.boundHandlers.onResize);
-    }
-    if (this.boundHandlers.onKeyDown) {
-      window.removeEventListener('keydown', this.boundHandlers.onKeyDown);
     }
 
     if (this.container) {

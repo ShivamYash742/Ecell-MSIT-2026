@@ -23,7 +23,7 @@ const StartingAnimation = () => {
         anim.mount(containerRef.current);
       }
     } catch (err) {
-      console.warn("Starting animation failed to initialize, skipping safely:", err);
+      console.warn("Starting animation failed to initialize, continuing to site:", err);
       dismissStartingAnimation();
       return;
     }
@@ -40,34 +40,23 @@ const StartingAnimation = () => {
         }
         dismissStartingAnimation();
         setFading(false);
-      }, 450);
+      }, 500);
     };
 
-    // Auto-dismiss smoothly after complete brand reveal sequence (4.8s)
+    // Compulsory full run of the starting animation (4.5s), then smoothly transitions into the website
     autoDismissTimer = setTimeout(() => {
       finishAnimation();
-    }, 4800);
+    }, 4500);
 
-    // Guaranteed safety timeout: unblocks website after 5.5s under all circumstances
+    // Backup safety timer in case tab was backgrounded during load
     safetyTimer = setTimeout(() => {
       finishAnimation();
     }, 5500);
-
-    const handleKeyDown = (e) => {
-      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-      if (e.code === "Space" || e.code === "Escape" || e.code === "Enter") {
-        e.preventDefault();
-        finishAnimation();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       if (autoDismissTimer) clearTimeout(autoDismissTimer);
       if (fadeTimer) clearTimeout(fadeTimer);
       if (safetyTimer) clearTimeout(safetyTimer);
-      window.removeEventListener("keydown", handleKeyDown);
       if (animInstanceRef.current) {
         try {
           animInstanceRef.current.unmount();
@@ -88,28 +77,6 @@ const StartingAnimation = () => {
       aria-label="eCell MSIT Starting Animation"
     >
       <div ref={containerRef} className="w-full h-full" />
-
-      {/* Floating Skip Intro Button */}
-      <button
-        type="button"
-        onClick={() => {
-          setFading(true);
-          setTimeout(() => {
-            if (animInstanceRef.current) {
-              try {
-                animInstanceRef.current.unmount();
-              } catch (e) {}
-              animInstanceRef.current = null;
-            }
-            dismissStartingAnimation();
-            setFading(false);
-          }, 350);
-        }}
-        className="absolute top-6 right-6 z-[1000] px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-white/80 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 rounded-full backdrop-blur-md shadow-lg transition"
-        title="Skip intro and enter website (Space / Esc)"
-      >
-        Skip Intro &rarr;
-      </button>
     </div>
   );
 };

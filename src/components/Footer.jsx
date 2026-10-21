@@ -8,7 +8,7 @@ import styles from "./Footer.module.css";
 import { useLoading } from "../context/LoadingContext";
 
 const Footer = () => {
-  const { navigateWithLoader, replayStartingAnimation } = useLoading();
+  const { navigateWithLoader } = useLoading();
 
   const handleLinkClick = (to, e) => {
     if (e) e.preventDefault();
@@ -27,14 +27,6 @@ const Footer = () => {
             <p className={styles.text}>
               Empowering students to innovate, lead, and create impactful solutions for the future.
             </p>
-            <button
-              type="button"
-              onClick={replayStartingAnimation}
-              className="mt-3 inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#00C853] hover:text-[#0072FF] transition"
-              title="Replay Brand Intro Animation"
-            >
-              <span>&#9654; Replay Brand Intro</span>
-            </button>
           </div>
 
           {/* Contact Info */}
