@@ -4,58 +4,74 @@ import { useLocation, useNavigate } from "react-router-dom";
 const LoadingContext = createContext();
 
 export const LoadingProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const timerRef = useRef(null);
-  const isInitialMount = useRef(true);
+  // Starting animation runs once on initial website entry
+  const [isStartingAnimation, setIsStartingAnimation] = useState(true);
 
-  // Cycling words: exact words from original App.jsx
+  // Navbar and page transition loader
+  const [isNavLoading, setIsNavLoading] = useState(false);
   const words = ["Ideate.", "Inspire.", "Invest."];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const timerRef = useRef(null);
+  const wordsIntervalRef = useRef(null);
+  const isInitialMount = useRef(true);
+  const navigatingRef = useRef(false);
+
+  // Cycling words during nav loading
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, 800);
-
-    return () => clearInterval(interval);
-  }, [words.length]);
-
-  // Initial load effect
-  useEffect(() => {
-    timerRef.current = setTimeout(() => {
-      setIsLoading(false);
-      isInitialMount.current = false;
-    }, 2400);
-
+    if (isNavLoading) {
+      wordsIntervalRef.current = setInterval(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % words.length);
+      }, 260);
+    } else {
+      if (wordsIntervalRef.current) {
+        clearInterval(wordsIntervalRef.current);
+        wordsIntervalRef.current = null;
+      }
+    }
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (wordsIntervalRef.current) clearInterval(wordsIntervalRef.current);
     };
-  }, []);
+  }, [isNavLoading, words.length]);
 
-  // Browser back/forward navigation support
+  // Handle browser back and forward navigation
   useEffect(() => {
-    if (isInitialMount.current) return;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
 
-    setIsLoading(true);
+    // If navigation was already triggered by navigateWithLoader, avoid double triggering
+    if (navigatingRef.current) {
+      navigatingRef.current = false;
+      return;
+    }
+
+    setIsNavLoading(true);
     setCurrentWordIndex(0);
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      setIsLoading(false);
-    }, 900);
+      setIsNavLoading(false);
+    }, 850);
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [location.pathname]);
 
-  // Navigation function invoked on any navbar / navigation control click
+  // Function called on Navbar, Footer, and page internal links
   const navigateWithLoader = (to) => {
+    if (isStartingAnimation) {
+      setIsStartingAnimation(false);
+    }
+
     if (timerRef.current) clearTimeout(timerRef.current);
-    setIsLoading(true);
+    navigatingRef.current = true;
+    setIsNavLoading(true);
     setCurrentWordIndex(0);
 
     if (location.pathname !== to) {
@@ -64,14 +80,28 @@ export const LoadingProvider = ({ children }) => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
     timerRef.current = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+      setIsNavLoading(false);
+      navigatingRef.current = false;
+    }, 850);
+  };
+
+  const dismissStartingAnimation = () => {
+    setIsStartingAnimation(false);
+  };
+
+  const replayStartingAnimation = () => {
+    setIsNavLoading(false);
+    setIsStartingAnimation(true);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
   return (
     <LoadingContext.Provider
       value={{
-        isLoading,
+        isStartingAnimation,
+        dismissStartingAnimation,
+        replayStartingAnimation,
+        isNavLoading,
         words,
         currentWordIndex,
         navigateWithLoader,

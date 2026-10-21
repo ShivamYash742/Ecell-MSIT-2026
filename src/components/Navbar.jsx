@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../public/logo.png";
 import { useLoading } from "../context/LoadingContext";
@@ -8,10 +8,11 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { navigateWithLoader } = useLoading();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 40) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -28,27 +29,40 @@ const Navbar = () => {
     navigateWithLoader(to);
   };
 
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Team", path: "/team" },
+    { name: "Services", path: "/services" },
+    { name: "Events", path: "/events" },
+    { name: "Contact", path: "/contact" },
+  ];
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <Link to="/" className={styles.logo} onClick={(e) => handleNavClick("/", e)}>
-        <img src={logo} alt="E-Cell MSIT Logo" />
+      <Link to="/" className={styles.logo} onClick={(e) => handleNavClick("/", e)} aria-label="eCell MSIT Home">
+        <img src={logo} alt="eCell MSIT Logo" />
       </Link>
 
       {/* Desktop Links */}
       <div className={styles.navLinks}>
-        <Link to="/" className={styles.navLink} onClick={(e) => handleNavClick("/", e)}>Home</Link>
-        <Link to="/about" className={styles.navLink} onClick={(e) => handleNavClick("/about", e)}>About</Link>
-        <Link to="/team" className={styles.navLink} onClick={(e) => handleNavClick("/team", e)}>Team</Link>
-        <Link to="/services" className={styles.navLink} onClick={(e) => handleNavClick("/services", e)}>Services</Link>
-        <Link to="/events" className={styles.navLink} onClick={(e) => handleNavClick("/events", e)}>Events</Link>
-        <Link to="/contact" className={styles.navLink} onClick={(e) => handleNavClick("/contact", e)}>Contact</Link>
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`${styles.navLink} ${location.pathname === item.path ? styles.activeLink : ""}`}
+            onClick={(e) => handleNavClick(item.path, e)}
+          >
+            {item.name}
+          </Link>
+        ))}
       </div>
 
       {/* Mobile Menu Toggle */}
       <button 
         className={styles.hamburger} 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle menu"
+        aria-label="Toggle navigation menu"
       >
         {isMenuOpen ? (
           <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -63,12 +77,16 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}>
-        <Link to="/" className={styles.mobileLink} onClick={(e) => handleNavClick("/", e)}>Home</Link>
-        <Link to="/about" className={styles.mobileLink} onClick={(e) => handleNavClick("/about", e)}>About</Link>
-        <Link to="/team" className={styles.mobileLink} onClick={(e) => handleNavClick("/team", e)}>Team</Link>
-        <Link to="/services" className={styles.mobileLink} onClick={(e) => handleNavClick("/services", e)}>Services</Link>
-        <Link to="/events" className={styles.mobileLink} onClick={(e) => handleNavClick("/events", e)}>Events</Link>
-        <Link to="/contact" className={styles.mobileLink} onClick={(e) => handleNavClick("/contact", e)}>Contact</Link>
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`${styles.mobileLink} ${location.pathname === item.path ? styles.activeMobileLink : ""}`}
+            onClick={(e) => handleNavClick(item.path, e)}
+          >
+            {item.name}
+          </Link>
+        ))}
       </div>
     </nav>
   );

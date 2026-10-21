@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LoadingProvider } from "./context/LoadingContext";
+import StartingAnimation from "./components/StartingAnimation";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/Homepage";
@@ -17,7 +18,8 @@ function App() {
   return (
     <Router>
       <LoadingProvider>
-        <div className="relative min-h-screen bg-gray-100">
+        <div className="relative min-h-screen bg-[#0A0A0A] text-[#F4F4F4]">
+          <StartingAnimation />
           <Loader />
           <div className="overflow-hidden">
             <Navbar />

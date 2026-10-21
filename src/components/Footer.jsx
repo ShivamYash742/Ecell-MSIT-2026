@@ -8,7 +8,7 @@ import styles from "./Footer.module.css";
 import { useLoading } from "../context/LoadingContext";
 
 const Footer = () => {
-  const { navigateWithLoader } = useLoading();
+  const { navigateWithLoader, replayStartingAnimation } = useLoading();
 
   const handleLinkClick = (to, e) => {
     if (e) e.preventDefault();
@@ -21,12 +21,20 @@ const Footer = () => {
         <div className={styles.grid}>
           {/* Logo & Description */}
           <div className={styles.col}>
-            <Link to="/" className={styles.logo} onClick={(e) => handleLinkClick("/", e)}>
-              <img src={logo} alt="E-Cell MSIT Logo" />
+            <Link to="/" className={styles.logo} onClick={(e) => handleLinkClick("/", e)} aria-label="eCell MSIT Home">
+              <img src={logo} alt="eCell MSIT Logo" />
             </Link>
             <p className={styles.text}>
               Empowering students to innovate, lead, and create impactful solutions for the future.
             </p>
+            <button
+              type="button"
+              onClick={replayStartingAnimation}
+              className="mt-3 inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#00C853] hover:text-[#0072FF] transition"
+              title="Replay Brand Intro Animation"
+            >
+              <span>&#9654; Replay Brand Intro</span>
+            </button>
           </div>
 
           {/* Contact Info */}
@@ -35,6 +43,11 @@ const Footer = () => {
             <div className={styles.text}>
               <p>eCell MSIT, Maharaja Surajmal Institute of Technology</p>
               <p>C-4 Janakpuri, New Delhi - 110059</p>
+              <p className="pt-2">
+                <Link to="/contact" className="text-[#00C853] hover:underline" onClick={(e) => handleLinkClick("/contact", e)}>
+                  Get in Touch &rarr;
+                </Link>
+              </p>
             </div>
           </div>
 
@@ -53,6 +66,9 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/team" className={styles.link} onClick={(e) => handleLinkClick("/team", e)}>Team</Link>
+              </li>
+              <li>
+                <Link to="/contact" className={styles.link} onClick={(e) => handleLinkClick("/contact", e)}>Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -75,7 +91,7 @@ const Footer = () => {
         </div>
 
         <div className={styles.bottom}>
-          <p>&copy; {new Date().getFullYear()} eCell MSIT. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} eCell MSIT. All rights reserved. Maharaja Surajmal Institute of Technology.</p>
         </div>
       </div>
     </footer>
