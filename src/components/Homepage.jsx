@@ -5,6 +5,8 @@ import img1 from "../public/IMG_3029.JPG";
 import img2 from "../public/IMG_2094.JPG";
 import img3 from "../public/IMG_4617.JPG";
 import speaker1 from "../public/Bill_Van_Heyst.png";
+import speaker2 from "../public/2.jpeg";
+import speaker3 from "../public/3.jpeg";
 import linkedinLogo from "../public/linkedin.png";
 
 const HomePage = () => {
@@ -41,16 +43,16 @@ const HomePage = () => {
       linkedin: "https://www.linkedin.com/in/bill-van-heyst-424735171/",
     },
     {
-      image: "https://ui-avatars.com/api/?name=Vedant+Rusty&background=fbbf24&color=fff&size=400",
+      image: speaker2,
       name: "Vedant Rusty",
       role: "YouTuber & Podcaster @storieswithrusty",
-      linkedin: "#",
+      linkedin: "https://in.linkedin.com/in/vedantrusty",
     },
     {
-      image: "https://ui-avatars.com/api/?name=Bhanu+pathak&background=fbbf24&color=fff&size=400",
+      image: speaker3,
       name: "Bhanu pathak",
       role: "Founder Growshow Media",
-      linkedin: "#",
+      linkedin: "https://in.linkedin.com/in/pathakbhanu",
     },
   ];
 

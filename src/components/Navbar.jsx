@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../public/logo.png";
+import { useLoading } from "../context/LoadingContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
+  const { navigateWithLoader } = useLoading();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,26 +22,26 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure scroll top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  const handleNavClick = (to, e) => {
+    if (e) e.preventDefault();
     setIsMenuOpen(false);
-  }, [location.pathname]);
+    navigateWithLoader(to);
+  };
 
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <Link to="/" className={styles.logo}>
+      <Link to="/" className={styles.logo} onClick={(e) => handleNavClick("/", e)}>
         <img src={logo} alt="E-Cell MSIT Logo" />
       </Link>
 
       {/* Desktop Links */}
       <div className={styles.navLinks}>
-        <Link to="/" className={styles.navLink}>Home</Link>
-        <Link to="/about" className={styles.navLink}>About</Link>
-        <Link to="/team" className={styles.navLink}>Team</Link>
-        <Link to="/services" className={styles.navLink}>Services</Link>
-        <Link to="/events" className={styles.navLink}>Events</Link>
-        <Link to="/contact" className={styles.navLink}>Contact</Link>
+        <Link to="/" className={styles.navLink} onClick={(e) => handleNavClick("/", e)}>Home</Link>
+        <Link to="/about" className={styles.navLink} onClick={(e) => handleNavClick("/about", e)}>About</Link>
+        <Link to="/team" className={styles.navLink} onClick={(e) => handleNavClick("/team", e)}>Team</Link>
+        <Link to="/services" className={styles.navLink} onClick={(e) => handleNavClick("/services", e)}>Services</Link>
+        <Link to="/events" className={styles.navLink} onClick={(e) => handleNavClick("/events", e)}>Events</Link>
+        <Link to="/contact" className={styles.navLink} onClick={(e) => handleNavClick("/contact", e)}>Contact</Link>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -62,12 +63,12 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}>
-        <Link to="/" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Home</Link>
-        <Link to="/about" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>About</Link>
-        <Link to="/team" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Team</Link>
-        <Link to="/services" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Services</Link>
-        <Link to="/events" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Events</Link>
-        <Link to="/contact" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Contact</Link>
+        <Link to="/" className={styles.mobileLink} onClick={(e) => handleNavClick("/", e)}>Home</Link>
+        <Link to="/about" className={styles.mobileLink} onClick={(e) => handleNavClick("/about", e)}>About</Link>
+        <Link to="/team" className={styles.mobileLink} onClick={(e) => handleNavClick("/team", e)}>Team</Link>
+        <Link to="/services" className={styles.mobileLink} onClick={(e) => handleNavClick("/services", e)}>Services</Link>
+        <Link to="/events" className={styles.mobileLink} onClick={(e) => handleNavClick("/events", e)}>Events</Link>
+        <Link to="/contact" className={styles.mobileLink} onClick={(e) => handleNavClick("/contact", e)}>Contact</Link>
       </div>
     </nav>
   );

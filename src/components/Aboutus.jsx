@@ -86,7 +86,7 @@ const AboutUs = () => {
           </div>
           <div className={styles.imageBlock}>
             <div className={styles.imageWrapper}>
-              <img src={missionImg} alt="Our Mission" className={styles.image} />
+              <img src="/our-mission.jpeg" alt="Our Mission" className={styles.image} />
             </div>
           </div>
         </div>
