@@ -15,15 +15,24 @@ const Footer = () => {
     navigateWithLoader(to);
   };
 
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    } else {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.grid}>
           {/* Logo & Description */}
           <div className={styles.col}>
-            <Link to="/" className={styles.logo} onClick={(e) => handleLinkClick("/", e)} aria-label="eCell MSIT Home">
+            <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
               <img src={logo} alt="eCell MSIT Logo" />
-            </Link>
+            </a>
             <p className={styles.text}>
               Empowering students to innovate, lead, and create impactful solutions for the future.
             </p>

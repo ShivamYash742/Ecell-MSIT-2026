@@ -29,6 +29,17 @@ const Navbar = () => {
     navigateWithLoader(to);
   };
 
+  // Clicking top-left logo reloads the website and starts from the starting animation
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    } else {
+      window.location.href = "/";
+    }
+  };
+
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -40,9 +51,10 @@ const Navbar = () => {
 
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <Link to="/" className={styles.logo} onClick={(e) => handleNavClick("/", e)} aria-label="eCell MSIT Home">
+      {/* Top Left Logo: Clicking reloads the website and replays starting animation */}
+      <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
         <img src={logo} alt="eCell MSIT Logo" />
-      </Link>
+      </a>
 
       {/* Desktop Links */}
       <div className={styles.navLinks}>
