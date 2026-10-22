@@ -69,26 +69,10 @@ const speakersData = [
 ];
 
 const HomePage = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
 
   return (
     <div className={`${styles.homepageRoot} ${!isDarkMode ? styles.lightTheme : ""}`}>
-      {/* Floating Global Theme Switch on Home */}
-      <button
-        type="button"
-        onClick={toggleTheme}
-        aria-label="Toggle Website Theme"
-        className={styles.themeSwitchBtn}
-      >
-        <span
-          className="w-2.5 h-2.5 rounded-full"
-          style={{ backgroundColor: isDarkMode ? "#0072FF" : "#00C853" }}
-        />
-        <span className="font-mono text-xs font-bold uppercase tracking-widest">
-          {isDarkMode ? "Dark Theme" : "Light Theme"}
-        </span>
-      </button>
-
       {/* Main Content Surface */}
       <main className={styles.surfaceGrid}>
         {/* HERO SECTION */}
