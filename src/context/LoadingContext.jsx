@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const LoadingContext = createContext();
@@ -10,8 +10,22 @@ export const LoadingProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    // Disable browser automatic scroll restoration so it never jumps down on reload
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
+    // Whenever website is reloaded (e.g. browser reload circular arrow button), always reset to Home ("/")
+    if (window.location.pathname !== "/") {
+      navigate("/", { replace: true });
+    }
+  }, []);
+
   const dismissStartingAnimation = () => {
     setIsStartingAnimation(false);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
   // Direct, instant navigation between pages - NO transition loader

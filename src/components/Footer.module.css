@@ -1,10 +1,13 @@
 .footer {
-  background-color: var(--color-bg-dark);
+  background-color: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--color-surface);
   padding: 4rem 2rem 2rem;
   position: relative;
+  z-index: 10;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer::before {
@@ -111,3 +114,30 @@
   color: var(--color-text-muted);
   font-size: 0.875rem;
 }
+
+/* Light Theme Overrides */
+:global(.light-theme) .footer {
+  background-color: rgba(244, 244, 244, 0.88);
+  border-top-color: rgba(0, 0, 0, 0.08);
+  color: #0a0a0a;
+}
+
+:global(.light-theme) .text,
+:global(.light-theme) .link {
+  color: #4b5563;
+}
+
+:global(.light-theme) .link:hover {
+  color: #0072ff;
+}
+
+:global(.light-theme) .socialIcon {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+:global(.light-theme) .bottom {
+  border-top-color: rgba(0, 0, 0, 0.08);
+  color: #6b7280;
+}
+

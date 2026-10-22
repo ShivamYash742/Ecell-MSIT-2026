@@ -3,11 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import logo from "../public/logo.png";
 import { useLoading } from "../context/LoadingContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { navigateWithLoader } = useLoading();
+  const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
@@ -56,18 +58,37 @@ const Navbar = () => {
         <img src={logo} alt="eCell MSIT Logo" />
       </a>
 
-      {/* Desktop Links */}
-      <div className={styles.navLinks}>
-        {navItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={`${styles.navLink} ${location.pathname === item.path ? styles.activeLink : ""}`}
-            onClick={(e) => handleNavClick(item.path, e)}
-          >
-            {item.name}
-          </Link>
-        ))}
+      {/* Desktop Links & Global Theme Switch */}
+      <div className={styles.navRight}>
+        <div className={styles.navLinks}>
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`${styles.navLink} ${location.pathname === item.path ? styles.activeLink : ""}`}
+              onClick={(e) => handleNavClick(item.path, e)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Global Dark/Light Theme Switcher */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label="Toggle Website Theme"
+          className={styles.themeToggleBtn}
+          title={isDarkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
+        >
+          <span
+            className={styles.themeDot}
+            style={{ backgroundColor: isDarkMode ? "#0072FF" : "#00C853" }}
+          />
+          <span className={styles.themeLabel}>
+            {isDarkMode ? "Dark" : "Light"}
+          </span>
+        </button>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -99,6 +120,23 @@ const Navbar = () => {
             {item.name}
           </Link>
         ))}
+
+        {/* Mobile Theme Switch Button */}
+        <button
+          type="button"
+          onClick={() => {
+            toggleTheme();
+            setIsMenuOpen(false);
+          }}
+          aria-label="Toggle Website Theme"
+          className={styles.mobileThemeToggle}
+        >
+          <span
+            className={styles.themeDot}
+            style={{ backgroundColor: isDarkMode ? "#0072FF" : "#00C853" }}
+          />
+          <span>{isDarkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}</span>
+        </button>
       </div>
     </nav>
   );

@@ -1,9 +1,11 @@
 .page {
-  background-color: var(--color-bg-dark, #0f172a);
+  background-color: transparent;
   min-height: 100vh;
-  color: #fff;
+  color: var(--color-text-main, #f4f4f4);
   padding-bottom: 5rem;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Dynamic Hero Section */
@@ -21,8 +23,8 @@
 .heroBackground {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
-              radial-gradient(circle at 80% 100%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 114, 255, 0.15) 0%, transparent 60%),
+              radial-gradient(circle at 80% 100%, rgba(0, 200, 83, 0.1) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -39,11 +41,17 @@
   letter-spacing: -1px;
 }
 
+:global(.light-theme) .title {
+  background: linear-gradient(135deg, #0a0a0a 0%, #374151 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .titleUnderline {
   display: block;
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #38bdf8, #fbbf24);
+  background: linear-gradient(90deg, #0072ff, #00c853);
   margin: 1.5rem auto 0;
   border-radius: 4px;
 }
@@ -56,6 +64,10 @@
   position: relative;
   z-index: 10;
   line-height: 1.6;
+}
+
+:global(.light-theme) .subtitle {
+  color: #4b5563;
 }
 
 /* Timeline/Sections */
@@ -77,21 +89,27 @@
   justify-content: space-between;
   gap: 4rem;
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 32px;
+  background: rgba(18, 18, 18, 0.72);
+  border: 1px solid rgba(156, 163, 175, 0.22);
+  border-radius: 28px;
   padding: 3rem;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: transform 0.4s ease, border-color 0.4s ease, background 0.4s ease;
   overflow: hidden;
+}
+
+:global(.light-theme) .row {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(156, 163, 175, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .row::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.05), transparent 40%);
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 200, 83, 0.08), transparent 45%);
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -100,8 +118,13 @@
 
 .row:hover {
   transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(0, 200, 83, 0.35);
+  background: rgba(28, 28, 28, 0.85);
+}
+
+:global(.light-theme) .row:hover {
+  border-color: rgba(0, 114, 255, 0.4);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .row:hover::before {
@@ -128,6 +151,10 @@
   font-weight: 700;
 }
 
+:global(.light-theme) .rowTitle {
+  color: #0a0a0a;
+}
+
 .rowTitle::after {
   content: '';
   position: absolute;
@@ -135,7 +162,7 @@
   bottom: -8px;
   width: 50px;
   height: 3px;
-  background: linear-gradient(90deg, #38bdf8, #fbbf24);
+  background: linear-gradient(90deg, #0072ff, #00c853);
   border-radius: 2px;
 }
 
@@ -145,9 +172,17 @@
   line-height: 1.8;
 }
 
+:global(.light-theme) .rowText {
+  color: #4b5563;
+}
+
 .rowText b {
   color: #f8fafc;
   font-weight: 600;
+}
+
+:global(.light-theme) .rowText b {
+  color: #0a0a0a;
 }
 
 .imageBlock {
@@ -161,9 +196,9 @@
   width: 100%;
   height: 350px;
   object-fit: cover;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(156, 163, 175, 0.25);
   transition: transform 0.5s ease;
   position: relative;
   z-index: 2;
@@ -180,8 +215,8 @@
   left: -15px;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(251, 191, 36, 0.2));
-  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(0, 114, 255, 0.25), rgba(0, 200, 83, 0.25));
+  border-radius: 20px;
   z-index: 1;
   transition: all 0.4s ease;
 }
@@ -213,4 +248,17 @@
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .row {
+    padding: 2rem 1.5rem;
+    gap: 2rem;
+  }
+  .rowTitle {
+    font-size: 1.8rem;
+  }
+  .image {
+    height: 260px;
+  }
 }

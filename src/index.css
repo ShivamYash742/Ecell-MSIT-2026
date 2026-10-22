@@ -5,39 +5,46 @@
 @tailwind utilities;
 
 :root {
-  /* Colors */
-  --color-primary: #0b0b71; /* Deep Navy Blue */
-  --color-primary-light: #1c1c93;
-  --color-primary-dark: #05053f;
+  /* Brand Tokens */
+  --brand-green: #00C853;
+  --brand-blue: #0072FF;
+  --brand-black: #0A0A0A;
+  --brand-light: #F4F4F4;
+  --brand-gray: #9CA3AF;
+
+  /* Theme tokens - Default Dark */
+  --color-primary: #0072FF;
+  --color-primary-light: #38bdf8;
+  --color-primary-dark: #0056c7;
   
-  --color-accent: #fbbf24; /* Amber/Gold */
-  --color-accent-light: #fcd34d;
+  --color-accent: #00C853;
+  --color-accent-light: #4ade80;
   
-  --color-bg: #f8fafc;
-  --color-bg-dark: #0f172a;
+  --color-bg: #0A0A0A;
+  --color-bg-dark: #0A0A0A;
   
   --color-surface: #ffffff;
-  --color-surface-hover: #f1f5f9;
+  --color-surface-hover: #1e293b;
   
-  --color-text-main: #1e293b;
-  --color-text-muted: #64748b;
-  --color-text-light: #f8fafc;
+  --color-text-main: #F4F4F4;
+  --color-text-muted: #9CA3AF;
+  --color-text-light: #F4F4F4;
   
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  --gradient-primary: linear-gradient(135deg, #0072FF 0%, #00C853 100%);
+  --gradient-accent: linear-gradient(135deg, #00C853 0%, #0072FF 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
   
   /* Typography */
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 20px rgba(11, 11, 113, 0.2);
-  --shadow-glow-accent: 0 0 20px rgba(251, 191, 36, 0.4);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(0, 200, 83, 0.3);
+  --shadow-glow-accent: 0 0 20px rgba(0, 114, 255, 0.3);
   
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -52,6 +59,25 @@
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Light Theme Overrides */
+html.light-theme, body.light-theme, .light-theme {
+  --color-bg: #F4F4F4;
+  --color-bg-dark: #F4F4F4;
+  
+  --color-surface: #0A0A0A;
+  --color-surface-hover: #e2e8f0;
+  
+  --color-text-main: #0A0A0A;
+  --color-text-muted: #4B5563;
+  --color-text-light: #0A0A0A;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(0, 200, 83, 0.15);
+  --shadow-glow-accent: 0 0 20px rgba(0, 114, 255, 0.15);
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg);
@@ -60,6 +86,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -100,9 +127,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(251, 191, 36, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(0, 200, 83, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
 }
 
 .animate-pulse-glow {

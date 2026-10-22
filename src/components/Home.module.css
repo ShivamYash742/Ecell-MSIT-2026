@@ -19,17 +19,17 @@
 
   position: relative;
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  background-color: transparent;
   color: var(--text-heading);
   font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 /* Light Mode Overrides */
 .homepageRoot.lightTheme {
   --bg-primary: #F4F4F4;
-  --bg-card: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.88);
   --text-heading: #0A0A0A;
   --text-sub: #4B5563;
   --text-muted: #9CA3AF;
@@ -37,6 +37,7 @@
   --border-color: rgba(156, 163, 175, 0.45);
   --shadow-minimal: 0 4px 12px rgba(10, 10, 10, 0.04);
   --shadow-hover: 0 8px 20px rgba(10, 10, 10, 0.08);
+  background-color: transparent;
 }
 
 /* 3D WebGL Canvas */
