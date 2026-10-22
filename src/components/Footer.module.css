@@ -132,8 +132,22 @@
 }
 
 :global(.light-theme) .socialIcon {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(156, 163, 175, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+:global(.light-theme) .socialIcon img {
+  filter: brightness(0);
+}
+
+:global(.light-theme) .socialIcon:hover {
+  background: rgba(0, 114, 255, 0.1);
+  border-color: #0072ff;
+}
+
+:global(.light-theme) .socialIcon:hover img {
+  filter: brightness(0) invert(28%) sepia(90%) saturate(2200%) hue-rotate(205deg) brightness(102%) contrast(105%);
 }
 
 :global(.light-theme) .bottom {

@@ -122,7 +122,7 @@ const HomePage = () => {
             {/* Primary CTAs */}
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <a href="#about" className={`${styles.btnPrimary} text-xs sm:text-sm uppercase tracking-widest px-8 py-4 font-bold`}>
-                About E-Cell
+                About e-Cell
               </a>
               <a href="#activities" className={`${styles.btnSecondary} text-xs sm:text-sm uppercase tracking-widest px-7 py-4 font-semibold`}>
                 Our Activities

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import logo from "../public/logo.png";
+import logoDark from "../public/logo.png";
+import logoLight from "../public/logo_light.png";
 import { useLoading } from "../context/LoadingContext";
 import { useTheme } from "../context/ThemeContext";
 
@@ -55,7 +56,7 @@ const Navbar = () => {
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
       {/* Top Left Logo: Clicking reloads the website and replays starting animation */}
       <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
-        <img src={logo} alt="eCell MSIT Logo" />
+        <img src={isDarkMode ? logoDark : logoLight} alt="eCell MSIT Logo" />
       </a>
 
       {/* Desktop Links & Global Theme Switch */}

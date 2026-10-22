@@ -50,7 +50,7 @@ const AboutUs = () => {
       <section className={styles.hero}>
         <div className={styles.heroBackground} />
         <h1 className={`${styles.title} ${styles.animateUp}`} style={{ animationDelay: '0.1s' }}>
-          About E-Cell
+          About e-Cell
           <span className={styles.titleUnderline} />
         </h1>
         <p className={`${styles.subtitle} ${styles.animateUp}`} style={{ animationDelay: '0.3s' }}>
@@ -66,7 +66,7 @@ const AboutUs = () => {
           <div className={styles.textBlock}>
             <h2 className={styles.rowTitle}>Who We Are</h2>
             <p className={styles.rowText}>
-              At E-Cell MSIT, we believe in fostering innovation and entrepreneurship among our students. Our incubation program provides a platform for young entrepreneurs to turn their ideas into successful startups. We are dedicated to nurturing the entrepreneurial spirit by offering guidance, resources, and networking opportunities to help transform ideas into impactful businesses.
+              At e-Cell MSIT, we believe in fostering innovation and entrepreneurship among our students. Our incubation program provides a platform for young entrepreneurs to turn their ideas into successful startups. We are dedicated to nurturing the entrepreneurial spirit by offering guidance, resources, and networking opportunities to help transform ideas into impactful businesses.
             </p>
           </div>
           <div className={styles.imageBlock}>
@@ -136,7 +136,7 @@ const AboutUs = () => {
           <div className={styles.textBlock}>
             <h2 className={styles.rowTitle}>Establishment</h2>
             <p className={styles.rowText}>
-              E-Cell MSIT was established in 2020 with the vision to create a supportive environment for budding entrepreneurs. Since our inception, we have been committed to empowering students to explore their entrepreneurial potential and make a difference in the world.
+              e-Cell MSIT was established in 2020 with the vision to create a supportive environment for budding entrepreneurs. Since our inception, we have been committed to empowering students to explore their entrepreneurial potential and make a difference in the world.
             </p>
           </div>
           <div className={styles.imageBlock}>

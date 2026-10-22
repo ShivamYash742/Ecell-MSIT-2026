@@ -1,14 +1,17 @@
 import React from "react";
-import logo from "../public/logo.png";
+import logoDark from "../public/logo.png";
+import logoLight from "../public/logo_light.png";
 import instagramLogo from "../public/instagram.png";
 import linkedinLogo from "../public/linkedin.png";
 import facebookLogo from "../public/facebook.png";
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 import { useLoading } from "../context/LoadingContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Footer = () => {
   const { navigateWithLoader } = useLoading();
+  const { isDarkMode } = useTheme();
 
   const handleLinkClick = (to, e) => {
     if (e) e.preventDefault();
@@ -31,7 +34,7 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className={styles.col}>
             <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
-              <img src={logo} alt="eCell MSIT Logo" />
+              <img src={isDarkMode ? logoDark : logoLight} alt="eCell MSIT Logo" />
             </a>
             <p className={styles.text}>
               Empowering students to innovate, lead, and create impactful solutions for the future.
