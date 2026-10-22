@@ -1,21 +1,41 @@
 import React from "react";
-import logo from "../public/logo.png";
+import logoDark from "../public/logo.png";
+import logoLight from "../public/logo_light.png";
 import instagramLogo from "../public/instagram.png";
 import linkedinLogo from "../public/linkedin.png";
 import facebookLogo from "../public/facebook.png";
 import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
+import { useLoading } from "../context/LoadingContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Footer = () => {
+  const { navigateWithLoader } = useLoading();
+  const { isDarkMode } = useTheme();
+
+  const handleLinkClick = (to, e) => {
+    if (e) e.preventDefault();
+    navigateWithLoader(to);
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    } else {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.grid}>
           {/* Logo & Description */}
           <div className={styles.col}>
-            <Link to="/" className={styles.logo}>
-              <img src={logo} alt="E-Cell MSIT Logo" />
-            </Link>
+            <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
+              <img src={isDarkMode ? logoDark : logoLight} alt="eCell MSIT Logo" />
+            </a>
             <p className={styles.text}>
               Empowering students to innovate, lead, and create impactful solutions for the future.
             </p>
@@ -27,6 +47,11 @@ const Footer = () => {
             <div className={styles.text}>
               <p>eCell MSIT, Maharaja Surajmal Institute of Technology</p>
               <p>C-4 Janakpuri, New Delhi - 110059</p>
+              <p className="pt-2">
+                <Link to="/contact" className="text-[#00C853] hover:underline" onClick={(e) => handleLinkClick("/contact", e)}>
+                  Get in Touch &rarr;
+                </Link>
+              </p>
             </div>
           </div>
 
@@ -35,16 +60,19 @@ const Footer = () => {
             <h4 className={styles.title}>Useful Links</h4>
             <ul className={styles.links}>
               <li>
-                <Link to="/about" className={styles.link}>About Us</Link>
+                <Link to="/about" className={styles.link} onClick={(e) => handleLinkClick("/about", e)}>About Us</Link>
               </li>
               <li>
-                <Link to="/services" className={styles.link}>Services</Link>
+                <Link to="/services" className={styles.link} onClick={(e) => handleLinkClick("/services", e)}>Services</Link>
               </li>
               <li>
-                <Link to="/events" className={styles.link}>Events</Link>
+                <Link to="/events" className={styles.link} onClick={(e) => handleLinkClick("/events", e)}>Events</Link>
               </li>
               <li>
-                <Link to="/team" className={styles.link}>Team</Link>
+                <Link to="/team" className={styles.link} onClick={(e) => handleLinkClick("/team", e)}>Team</Link>
+              </li>
+              <li>
+                <Link to="/contact" className={styles.link} onClick={(e) => handleLinkClick("/contact", e)}>Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -53,13 +81,13 @@ const Footer = () => {
           <div className={styles.col}>
             <h4 className={styles.title}>Follow Us</h4>
             <div className={styles.socials}>
-              <a href="https://www.instagram.com/ecellmsit/" target="_blank" rel="noreferrer" className={styles.socialIcon}>
+              <a href="https://www.instagram.com/ecellmsit/" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="Instagram">
                 <img src={instagramLogo} alt="Instagram" />
               </a>
-              <a href="https://in.linkedin.com/company/ecellmsit" target="_blank" rel="noreferrer" className={styles.socialIcon}>
+              <a href="https://in.linkedin.com/company/ecellmsit" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="LinkedIn">
                 <img src={linkedinLogo} alt="LinkedIn" />
               </a>
-              <a href="https://www.facebook.com/ecellmsit/" target="_blank" rel="noreferrer" className={styles.socialIcon}>
+              <a href="https://www.facebook.com/ecellmsit/" target="_blank" rel="noreferrer" className={styles.socialIcon} aria-label="Facebook">
                 <img src={facebookLogo} alt="Facebook" />
               </a>
             </div>
@@ -67,7 +95,7 @@ const Footer = () => {
         </div>
 
         <div className={styles.bottom}>
-          <p>&copy; {new Date().getFullYear()} eCell MSIT. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} eCell MSIT. All rights reserved. Maharaja Surajmal Institute of Technology.</p>
         </div>
       </div>
     </footer>

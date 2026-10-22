@@ -1,239 +1,987 @@
+
+
+
 .page {
-  background-color: var(--color-bg-dark, #0f172a);
+  --team-bg: transparent;
+  --team-surface: rgba(16, 24, 39, 0.72);
+  --team-surface-hover: rgba(21, 31, 50, 0.85);
+  --team-border: rgba(148, 163, 184, 0.2);
+  --team-text: #f1f5f9;
+  --team-muted: #94a3b8;
+  --team-blue: #0072ff;
+  --team-cyan: #00c853;
+
   min-height: 100vh;
-  color: #fff;
-  padding-bottom: 5rem;
+  padding-bottom: 7rem;
+  overflow: hidden;
+  color: var(--team-text);
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 
-/* Dynamic Hero Section */
+:global(.light-theme) .page {
+  --team-surface: rgba(255, 255, 255, 0.88);
+  --team-surface-hover: rgba(255, 255, 255, 0.98);
+  --team-border: rgba(156, 163, 175, 0.35);
+  --team-text: #0a0a0a;
+  --team-muted: #4b5563;
+  --team-blue: #0072ff;
+  --team-cyan: #00c853;
+}
+
+/* Light Theme Hero & Headings */
+:global(.light-theme) .title {
+  background: linear-gradient(135deg, #0a0a0a 0%, #374151 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:global(.light-theme) .eyebrow {
+  color: #0072ff;
+  background: rgba(0, 114, 255, 0.08);
+  border-color: rgba(0, 114, 255, 0.25);
+  font-weight: 700;
+}
+
+:global(.light-theme) .eyebrow::before {
+  background: #00c853;
+  box-shadow: 0 0 8px rgba(0, 200, 83, 0.5);
+}
+
+:global(.light-theme) .subtitle {
+  color: #4b5563;
+}
+
+:global(.light-theme) .sectionTitle {
+  color: #0a0a0a;
+}
+
+/* Light Theme Cards (Mentors/Proctors & Departments) */
+:global(.light-theme) .memberCard,
+:global(.light-theme) .deptCard {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(156, 163, 175, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+:global(.light-theme) .memberCard::before,
+:global(.light-theme) .deptCard::before {
+  background: linear-gradient(90deg, #00c853, #0072ff);
+  opacity: 0.8;
+}
+
+:global(.light-theme) .memberCard:hover,
+:global(.light-theme) .deptCard:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 114, 255, 0.45);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+:global(.light-theme) .memberImage,
+:global(.light-theme) .deptMemberImage {
+  background: #f1f5f9;
+  border-color: rgba(0, 114, 255, 0.35);
+  box-shadow: 0 0 0 6px rgba(0, 114, 255, 0.06);
+}
+
+/* Proctor & Leadership Names */
+:global(.light-theme) .memberName {
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+:global(.light-theme) .memberRole {
+  background: rgba(0, 114, 255, 0.08);
+  border-color: rgba(0, 114, 255, 0.25);
+  color: #0072ff;
+  font-weight: 600;
+}
+
+:global(.light-theme) .photoHint {
+  color: #0072ff;
+}
+
+/* Department Card Details (Heads & Deputies) */
+:global(.light-theme) .deptName {
+  color: #0072ff;
+  font-weight: 800;
+}
+
+:global(.light-theme) .roleLabel {
+  color: #374151;
+  font-weight: 750;
+}
+
+:global(.light-theme) .roleLabel::after {
+  background: rgba(156, 163, 175, 0.3);
+}
+
+:global(.light-theme) .deptMemberName {
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+:global(.light-theme) .execRole {
+  color: #4b5563;
+}
+
+/* Light Theme Lightbox Modal */
+:global(.light-theme) .lightboxContent {
+  background: #ffffff;
+  border-color: rgba(156, 163, 175, 0.35);
+  color: #0a0a0a;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+:global(.light-theme) .lightboxInfo h3 {
+  color: #0a0a0a;
+}
+
+:global(.light-theme) .lightboxInfo p {
+  color: #4b5563;
+}
+
+:global(.light-theme) .lightboxClose {
+  background: rgba(0, 0, 0, 0.06);
+  color: #4b5563;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+/* Hero */
+
 .hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 410px;
+  padding: 110px 24px 90px;
+  text-align: center;
+}
+
+.heroBackground {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(59, 130, 246, 0.13), transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(124, 58, 237, 0.08), transparent 35%);
+}
+
+.title {
+  position: relative;
+  margin: 0 0 22px;
+  font-family: var(--font-heading, inherit);
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -0.065em;
+  color: transparent;
+  background: linear-gradient(115deg, #ffffff 20%, #bfdbfe 60%, #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.titleUnderline {
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 22px auto 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--team-cyan), #818cf8);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.2);
+}
+
+.subtitle {
+  max-width: 570px;
+  margin: 0 auto;
+  color: #a5b4c9;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.85;
+}
+
+/* Main sections */
+
+.section {
+  position: relative;
+  z-index: 1;
+  width: min(1160px, calc(100% - 48px));
+  margin: 0 auto 100px;
+}
+
+.sectionTitle {
+  margin: 0 0 42px;
+  color: var(--team-text);
+  font-family: var(--font-heading, inherit);
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Member grids */
+
+.mentorGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* Portrait cards */
+
+.memberCard {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 255px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 22px;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(
+    145deg,
+    rgba(21, 32, 51, 0.94),
+    rgba(13, 21, 36, 0.96)
+  );
+  border: 1px solid var(--team-border);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.memberCard::before {
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 64%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(96, 165, 250, 0.65),
+    transparent
+  );
+  opacity: 0.45;
+}
+
+.memberCard:hover {
+  transform: translateY(-7px);
+  background: linear-gradient(145deg, #18263e, #111a2c);
+  border-color: rgba(96, 165, 250, 0.42);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.24);
+}
+
+.memberImage {
+  display: block;
+  width: 112px;
+  height: 112px;
+  flex-shrink: 0;
+  margin-bottom: 23px;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 3px solid rgba(96, 165, 250, 0.45);
+  border-radius: 50%;
+  background: #1e293b;
+  box-shadow: 0 0 0 7px rgba(96, 165, 250, 0.07);
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.memberCard:hover .memberImage {
+  transform: scale(1.045);
+  border-color: var(--team-cyan);
+  box-shadow: 0 0 0 8px rgba(34, 211, 238, 0.08);
+}
+
+.memberInfo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.memberName {
+  margin: 0 0 9px;
+  color: #f8fafc;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.memberRole {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 7px 12px;
+  color: #93c5fd;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.13);
+  border-radius: 999px;
+}
+
+/* Leadership layout */
+
+.mentorGrid:has(.memberCard:nth-child(5)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Department cards */
+
+.deptGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.deptCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 30px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(17, 27, 45, 0.96),
+    rgba(11, 18, 31, 0.98)
+  );
+  border: 1px solid var(--team-border);
+  border-radius: 22px;
+  transition:
+    transform 260ms ease,
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.deptCard::before {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 58px;
+  height: 3px;
+  content: "";
+  background: linear-gradient(90deg, var(--team-cyan), #818cf8);
+  border-radius: 0 0 4px 4px;
+}
+
+.deptCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(96, 165, 250, 0.32);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.2);
+}
+
+.deptName {
+  margin: 0 0 28px;
+  color: #f8fafc;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.4rem;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.roleGroup {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.roleGroup:last-child {
+  margin-bottom: 0;
+}
+
+.roleLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #7dd3fc;
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.roleLabel::after {
+  height: 1px;
+  flex: 1;
+  content: "";
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.deptMembersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px 12px;
+}
+
+.deptMember {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.deptMemberImage {
+  display: block;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 12px;
+  object-fit: cover;
+  object-position: center 30%;
+  background: #1e293b;
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 50%;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease;
+}
+
+.deptMember:hover .deptMemberImage {
+  transform: translateY(-3px);
+  border-color: var(--team-cyan);
+}
+
+.deptMemberName {
+  max-width: 145px;
+  color: #d4deed;
+  font-size: 0.84rem;
+  font-weight: 550;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* Entry animation */
+
+.animateUp {
+  animation: fadeUp 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 360px;
+    padding-top: 95px;
+    padding-bottom: 70px;
+  }
+
+  .section {
+    margin-bottom: 76px;
+  }
+
+  .mentorGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .mentorGrid:has(.memberCard:nth-child(5)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .deptGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .memberCard {
+    min-height: 245px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 540px) {
+  .page {
+    padding-bottom: 3rem;
+  }
+
+  .hero {
+    min-height: 320px;
+    padding: 80px 22px 58px;
+  }
+
+  .title {
+    font-size: clamp(3rem, 13vw, 4.2rem);
+  }
+
+  .subtitle {
+    max-width: 360px;
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+
+  .section {
+    width: calc(100% - 32px);
+    margin-bottom: 64px;
+  }
+
+  .sectionTitle {
+    margin-bottom: 28px;
+    font-size: 2rem;
+  }
+
+  .mentorGrid,
+  .mentorGrid:has(.memberCard:nth-child(5)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .memberCard {
+    min-height: 220px;
+    padding: 24px 10px;
+    border-radius: 17px;
+  }
+
+  .memberImage {
+    width: 84px;
+    height: 84px;
+    margin-bottom: 17px;
+  }
+
+  .memberName {
+    font-size: 0.91rem;
+  }
+
+  .memberRole {
+    padding: 6px 8px;
+    font-size: 0.7rem;
+  }
+
+  .deptGrid {
+    gap: 16px;
+  }
+
+  .deptCard {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .deptCard::before {
+    left: 18px;
+  }
+
+  .deptName {
+    margin-bottom: 24px;
+    font-size: 1.25rem;
+  }
+
+  .deptMembersGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 8px;
+  }
+
+  .deptMemberImage {
+    width: 66px;
+    height: 66px;
+  }
+
+  .deptMemberName {
+    font-size: 0.79rem;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .animateUp {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .memberCard,
+  .deptCard,
+  .memberImage,
+  .deptMemberImage {
+    transition: none;
+  }
+
+  .memberCard:hover,
+  .deptCard:hover,
+  .memberImage:hover,
+  .deptMemberImage:hover {
+    transform: none;
+  }
+}
+
+
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 24px;
+  padding: 9px 14px;
+  color: #93c5fd;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.07);
+}
+
+.eyebrow::before {
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: #22d3ee;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
+}
+
+@media (max-width: 540px) {
+  .eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.11em;
+  }
+}
+
+/* =========================================
+   CLICKABLE PROFILE PHOTOS
+========================================= */
+
+.photoButton,
+.deptPhotoButton {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 10rem 2rem 5rem;
-  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.heroBackground {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
-              radial-gradient(circle at 80% 100%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
-  pointer-events: none;
+.photoButton {
+  gap: 10px;
+  margin: 0 0 20px;
 }
 
-.title {
-  font-family: var(--font-heading);
-  font-size: clamp(3rem, 6vw, 5rem);
-  font-weight: 800;
-  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 10;
-  letter-spacing: -1px;
+.photoButton .memberImage {
+  margin-bottom: 0;
 }
 
-.titleUnderline {
-  display: block;
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(90deg, #38bdf8, #fbbf24);
-  margin: 1.5rem auto 0;
-  border-radius: 4px;
+.photoHint {
+  color: #93c5fd;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: color 200ms ease, opacity 200ms ease;
 }
 
-.subtitle {
-  color: #94a3b8;
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
-  max-width: 600px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 10;
-  line-height: 1.6;
-}
-
-/* Sections */
-.section {
-  max-width: 1200px;
-  margin: 0 auto 5rem;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 10;
-}
-
-.sectionTitle {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  color: #f8fafc;
-  text-align: center;
-  margin-bottom: 3rem;
-  font-weight: 700;
-}
-
-/* Grids */
-.mentorGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-}
-
-.deptGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 2rem;
-}
-
-/* Cards (Glassmorphism & Mouse Tracking) */
-.memberCard, .deptCard {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 24px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, border-color 0.4s ease;
-  width: 100%;
-}
-
-.deptCard {
-  align-items: flex-start;
-  padding: 2.5rem;
-}
-
-.memberCard::before, .deptCard::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-.memberCard:hover, .deptCard:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.memberCard:hover::before, .deptCard:hover::before {
+.photoButton:hover .photoHint,
+.photoButton:focus-visible .photoHint {
+  color: #67e8f9;
   opacity: 1;
 }
 
-/* Member Specific */
-.memberImage {
-  width: 120px;
-  height: 120px;
+.photoButton:focus-visible,
+.deptPhotoButton:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+
+.deptPhotoButton {
+  margin: 0 0 10px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 1.5rem;
-  transition: border-color 0.3s ease, transform 0.4s ease;
 }
 
-.memberCard:hover .memberImage {
-  border-color: #38bdf8;
-  transform: scale(1.05);
+.deptPhotoButton .deptMemberImage {
+  margin-bottom: 0;
 }
 
-.memberInfo {
-  text-align: center;
+.deptPhotoHint {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: #fff;
+  font-size: 1rem;
+  background: #2563eb;
+  border: 2px solid #101827;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 
-.memberName {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  color: #f8fafc;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
+.deptPhotoButton:hover .deptPhotoHint,
+.deptPhotoButton:focus-visible .deptPhotoHint {
+  opacity: 1;
+  transform: scale(1);
 }
 
-.memberRole {
-  color: #38bdf8;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
+/* =========================================
+   FULL-SCREEN PHOTO VIEWER
+========================================= */
 
-/* Department Specific */
-.deptName {
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  color: #f8fafc;
-  margin-bottom: 2rem;
-  font-weight: 700;
-}
-
-.roleGroup {
+.lightbox {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
   display: flex;
-  flex-direction: column;
-  margin-bottom: 2rem;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(2, 6, 18, 0.9);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  animation: lightboxFadeIn 220ms ease both;
 }
 
-.roleLabel {
-  color: #38bdf8;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.deptMembersGrid {
+.lightboxContent {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.deptMember {
-  display: flex;
+  width: min(100%, 850px);
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  max-width: 130px;
+  padding: 20px;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(22, 33, 54, 0.98),
+    rgba(8, 13, 25, 0.99)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 24px;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+  animation: lightboxZoomIn 250ms ease both;
 }
 
-.deptMemberImage {
-  width: 110px;
-  height: 110px;
+.lightboxClose {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  background: rgba(2, 6, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 0.8rem;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
 }
 
-.deptCard:hover .deptMemberImage {
-  border-color: #38bdf8;
+.lightboxClose:hover {
+  background: #2563eb;
+  transform: rotate(90deg);
 }
 
-.deptMemberName {
-  color: #cbd5e1;
-  font-size: 0.95rem;
-  line-height: 1.3;
-  font-weight: 500;
+.lightboxClose:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 3px;
 }
 
-/* Animations */
-.animateUp {
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
+.lightboxImageWrap {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.45);
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+.lightboxImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 175px);
+  max-height: calc(100dvh - 175px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+}
+
+.lightboxInfo {
+  width: 100%;
+  flex: 0 0 auto;
+  padding: 18px 8px 4px;
+  text-align: center;
+}
+
+.lightboxInfo h3 {
+  margin: 0 0 7px;
+  color: #f8fafc;
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+  font-weight: 750;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.lightboxInfo p {
+  margin: 0;
+  color: #93c5fd;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightboxZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 900px) {
+  .lightboxContent {
+    width: min(100%, 680px);
+  }
+}
+
+@media (max-width: 540px) {
+  .photoButton {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .photoHint {
+    font-size: 0.66rem;
+  }
+
+  .lightbox {
+    padding: 12px;
+  }
+
+  .lightboxContent {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .lightboxClose {
+    top: 8px;
+    right: 8px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .lightboxImageWrap {
+    border-radius: 10px;
+  }
+
+  .lightboxImage {
+    max-height: calc(100vh - 145px);
+    max-height: calc(100dvh - 145px);
+    border-radius: 8px;
+  }
+
+  .lightboxInfo {
+    padding-top: 14px;
+  }
+
+  .lightboxInfo p {
+    font-size: 0.82rem;
+  }
+
+  .deptPhotoHint {
+    width: 22px;
+    height: 22px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightboxContent {
+    animation: none;
+  }
+
+  .photoHint,
+  .deptPhotoHint,
+  .lightboxClose {
+    transition: none;
+  }
 }

@@ -1,10 +1,12 @@
 .page {
-  background-color: var(--color-bg-dark);
+  background-color: transparent;
   min-height: 100vh;
   padding-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .container {
@@ -117,4 +119,36 @@
   font-size: 0.85rem;
   color: #64748b;
   line-height: 1.7;
+}
+
+/* Light Theme Overrides */
+:global(.light-theme) .card {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(156, 163, 175, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+:global(.light-theme) .name {
+  color: #0a0a0a;
+}
+
+:global(.light-theme) .year {
+  color: #4b5563;
+}
+
+:global(.light-theme) .socialLink {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(156, 163, 175, 0.35);
+  color: #4b5563;
+}
+
+:global(.light-theme) .socialLink:hover {
+  background: rgba(0, 114, 255, 0.1);
+  border-color: #0072ff;
+  color: #0072ff;
+}
+
+:global(.light-theme) .attribution {
+  color: #6b7280;
+  border-top-color: rgba(0, 0, 0, 0.08);
 }

@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import logo from "../public/logo.png";
+import logoDark from "../public/logo.png";
+import logoLight from "../public/logo_light.png";
+import { useLoading } from "../context/LoadingContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { navigateWithLoader } = useLoading();
+  const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 40) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -21,33 +26,77 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Ensure scroll top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  const handleNavClick = (to, e) => {
+    if (e) e.preventDefault();
     setIsMenuOpen(false);
-  }, [location.pathname]);
+    navigateWithLoader(to);
+  };
+
+  // Clicking top-left logo reloads the website and starts from the starting animation
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    } else {
+      window.location.href = "/";
+    }
+  };
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Team", path: "/team" },
+    { name: "Services", path: "/services" },
+    { name: "Events", path: "/events" },
+    { name: "Contact", path: "/contact" },
+  ];
 
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
-      <Link to="/" className={styles.logo}>
-        <img src={logo} alt="E-Cell MSIT Logo" />
-      </Link>
+      {/* Top Left Logo: Clicking reloads the website and replays starting animation */}
+      <a href="/" className={styles.logo} onClick={handleLogoClick} aria-label="eCell MSIT Home - Reload to Intro">
+        <img src={isDarkMode ? logoDark : logoLight} alt="eCell MSIT Logo" />
+      </a>
 
-      {/* Desktop Links */}
-      <div className={styles.navLinks}>
-        <Link to="/" className={styles.navLink}>Home</Link>
-        <Link to="/about" className={styles.navLink}>About</Link>
-        <Link to="/team" className={styles.navLink}>Team</Link>
-        <Link to="/services" className={styles.navLink}>Services</Link>
-        <Link to="/events" className={styles.navLink}>Events</Link>
-        <Link to="/contact" className={styles.navLink}>Contact</Link>
+      {/* Desktop Links & Global Theme Switch */}
+      <div className={styles.navRight}>
+        <div className={styles.navLinks}>
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`${styles.navLink} ${location.pathname === item.path ? styles.activeLink : ""}`}
+              onClick={(e) => handleNavClick(item.path, e)}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Global Dark/Light Theme Switcher */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label="Toggle Website Theme"
+          className={styles.themeToggleBtn}
+          title={isDarkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}
+        >
+          <span
+            className={styles.themeDot}
+            style={{ backgroundColor: isDarkMode ? "#0072FF" : "#00C853" }}
+          />
+          <span className={styles.themeLabel}>
+            {isDarkMode ? "Dark" : "Light"}
+          </span>
+        </button>
       </div>
 
       {/* Mobile Menu Toggle */}
       <button 
         className={styles.hamburger} 
         onClick={() => setIsMenuOpen(!isMenuOpen)}
-        aria-label="Toggle menu"
+        aria-label="Toggle navigation menu"
       >
         {isMenuOpen ? (
           <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -62,12 +111,33 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ""}`}>
-        <Link to="/" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Home</Link>
-        <Link to="/about" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>About</Link>
-        <Link to="/team" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Team</Link>
-        <Link to="/services" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Services</Link>
-        <Link to="/events" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Events</Link>
-        <Link to="/contact" className={styles.mobileLink} onClick={() => setIsMenuOpen(false)}>Contact</Link>
+        {navItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`${styles.mobileLink} ${location.pathname === item.path ? styles.activeMobileLink : ""}`}
+            onClick={(e) => handleNavClick(item.path, e)}
+          >
+            {item.name}
+          </Link>
+        ))}
+
+        {/* Mobile Theme Switch Button */}
+        <button
+          type="button"
+          onClick={() => {
+            toggleTheme();
+            setIsMenuOpen(false);
+          }}
+          aria-label="Toggle Website Theme"
+          className={styles.mobileThemeToggle}
+        >
+          <span
+            className={styles.themeDot}
+            style={{ backgroundColor: isDarkMode ? "#0072FF" : "#00C853" }}
+          />
+          <span>{isDarkMode ? "Switch to Light Theme" : "Switch to Dark Theme"}</span>
+        </button>
       </div>
     </nav>
   );

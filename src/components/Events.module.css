@@ -1,10 +1,12 @@
 .page {
-  background-color: var(--color-bg-dark, #0f172a);
+  background-color: transparent;
   min-height: 100vh;
-  padding-top: 80px; /* Account for navbar */
-  color: #fff;
+  padding-top: 80px;
+  color: var(--color-text-main, #f4f4f4);
   padding-bottom: 5rem;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Dynamic Hero Section */
@@ -382,4 +384,48 @@
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Light Theme Overrides */
+:global(.light-theme) .eventCard {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(156, 163, 175, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+:global(.light-theme) .eventTitle {
+  color: #0a0a0a;
+}
+
+:global(.light-theme) .eventDesc {
+  color: #4b5563;
+}
+
+:global(.light-theme) .metaDate,
+:global(.light-theme) .metaVisitors {
+  color: #6b7280;
+}
+
+:global(.light-theme) .modalContent {
+  background: #ffffff;
+  border-color: rgba(156, 163, 175, 0.35);
+  color: #0a0a0a;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+:global(.light-theme) .modalTitle {
+  color: #0a0a0a;
+}
+
+:global(.light-theme) .modalDesc {
+  color: #374151;
+}
+
+:global(.light-theme) .modalClose {
+  background: rgba(0, 0, 0, 0.06);
+  color: #4b5563;
+}
+
+:global(.light-theme) .sectionTitle {
+  color: #0a0a0a;
 }

@@ -1,0 +1,134 @@
+/* ==========================================================================
+  Animation 4: Orbital Trace (Cinematic Orbital Comets + SVG Tracing) Styles
+  ========================================================================== */
+
+.anim4-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg, #0B1220);
+  overflow: hidden;
+}
+
+/* Background Canvas Layer (Renders deep gradient, ambient particles, & dual orbital comet trails) */
+.anim4-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* SVG Emblem Container (Layered directly above canvas) */
+.anim4-svg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.orbital-trace-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbital-trace-svg {
+  position: absolute;
+  top: calc(50% - 72px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(230px, 48vw, 290px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 12px 36px rgba(0, 0, 0, 0.75));
+}
+
+.orb-path {
+  fill: none;
+  fill-opacity: 0;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Brand Typography Layer */
+.anim4-typography-layer {
+  position: absolute;
+  top: calc(50% + 88px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+  width: 90%;
+  max-width: 680px;
+}
+
+/* Wordmark: eCell MSIT */
+.anim4-wordmark {
+  font-family: var(--font-display, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(2.4rem, 5.8vw, 3.8rem);
+  font-weight: 800;
+  color: var(--color-text-main, #F4F4F4);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 0.45rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.75);
+}
+
+.anim4-wordmark.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.anim4-wordmark span {
+  color: var(--color-text-main, #F4F4F4);
+}
+
+.anim4-wordmark span:nth-child(3) {
+  margin-left: 0.35rem;
+}
+
+/* Tagline: IDEATE. INSPIRE. INVEST. */
+.anim4-tagline {
+  font-family: var(--font-tagline, 'Outfit', sans-serif);
+  font-size: clamp(0.82rem, 2.0vw, 1.05rem);
+  font-weight: 600;
+  color: var(--color-text-secondary, #9CA3AF);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  will-change: opacity, transform, letter-spacing;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+}
+
+.anim4-tagline.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0.36em;
+}
